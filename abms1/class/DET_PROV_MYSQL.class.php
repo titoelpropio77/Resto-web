@@ -1,0 +1,18 @@
+<?php/** * DET_PROV_MYSQL.class.php * DET_PROV **/class DET_PROV_MYSQL {	public static $DATABASE_NAME = 'posgourmet';	public static $TABLE_NAME = 'det_prov_mysql';public $CONN;	/**	 * @var TRANSAC	 */	public $TRANSAC ;	/**	 * @var ITEMS	 */	public $ITEMS ;	/**	 * @var NOM_INSUMO	 */	public $NOM_INSUMO ;	/**	 * @var CANTIDAD	 */	public $CANTIDAD ;	/**	 * @var COSTO	 */	public $COSTO ;	/**	 * @var SUB_TOTAL	 */	public $SUB_TOTAL ;	/**	 * @var COD_INS	 */	public $COD_INS ;	/**	 * @var FECHA	 */	public $FECHA ;	/**	 * @var DHORAVEN	 */	public $DHORAVEN ;	/**	 * @var CAM_OF	 */	public $CAM_OF ;	/**	 * @var FORMAPAGO	 */	public $FORMAPAGO ;	/**	 * @var ESTADO	 */	public $ESTADO ;	/**	 * @var TURNO	 */	public $TURNO ;	public $ID ;function DET_PROV_MYSQL($con) {$this->CON=$con;}	function contructor($TRANSAC,$ITEMS,$NOM_INSUMO,$CANTIDAD,$COSTO,$SUB_TOTAL,$COD_INS,$FECHA,$DHORAVEN,$CAM_OF,$FORMAPAGO,$ESTADO,$TURNO,$ID){	$this->TRANSAC=$TRANSAC;	$this->ITEMS=$ITEMS;	$this->NOM_INSUMO=$NOM_INSUMO;	$this->CANTIDAD=$CANTIDAD;	$this->COSTO=$COSTO;	$this->SUB_TOTAL=$SUB_TOTAL;	$this->COD_INS=$COD_INS;	$this->FECHA=$FECHA;	$this->DHORAVEN=$DHORAVEN;	$this->CAM_OF=$CAM_OF;	$this->FORMAPAGO=$FORMAPAGO;	$this->ESTADO=$ESTADO;	$this->TURNO=$TURNO;	$this->ID=$ID;	}function insertar() { $consulta="INSERT INTO(TRANSAC,ITEMS,NOM_INSUMO,CANTIDAD,COSTO,SUB_TOTAL,COD_INS,FECHA,DHORAVEN,CAM_OF,FORMAPAGO,ESTADO,TURNO,ID)values('".$this->TRANSAC."','".$this->ITEMS."','".$this->NOM_INSUMO."','".$this->CANTIDAD."','".$this->COSTO."','".$this->SUB_TOTAL."','".$this->COD_INS."','".$this->FECHA."','".$this->DHORAVEN."','".$this->CAM_OF."','".$this->FORMAPAGO."','".$this->ESTADO."','".$this->TURNO."','".$this->ID."')"; return $this->CON->manipular($consulta);}function rellenar($resultado){
+        if ($resultado->num_rows > 0) {
+            $lista=array();
+            while($row = $resultado->fetch_assoc()) {	$det_prov_mysql= new DET_PROV_MYSQL("");		$det_prov_mysql->TRANSAC=$row["TRANSAC"] ==null?"":$row["TRANSAC"];		$det_prov_mysql->ITEMS=$row["ITEMS"] ==null?"":$row["ITEMS"];		$det_prov_mysql->NOM_INSUMO=$row["NOM_INSUMO"] ==null?"":$row["NOM_INSUMO"];		$det_prov_mysql->CANTIDAD=$row["CANTIDAD"] ==null?"":$row["CANTIDAD"];		$det_prov_mysql->COSTO=$row["COSTO"] ==null?"":$row["COSTO"];		$det_prov_mysql->SUB_TOTAL=$row["SUB_TOTAL"] ==null?"":$row["SUB_TOTAL"];		$det_prov_mysql->COD_INS=$row["COD_INS"] ==null?"":$row["COD_INS"];		$det_prov_mysql->FECHA=$row["FECHA"] ==null?"":$row["FECHA"];		$det_prov_mysql->DHORAVEN=$row["DHORAVEN"] ==null?"":$row["DHORAVEN"];		$det_prov_mysql->CAM_OF=$row["CAM_OF"] ==null?"":$row["CAM_OF"];		$det_prov_mysql->FORMAPAGO=$row["FORMAPAGO"] ==null?"":$row["FORMAPAGO"];		$det_prov_mysql->ESTADO=$row["ESTADO"] ==null?"":$row["ESTADO"];		$det_prov_mysql->TURNO=$row["TURNO"] ==null?"":$row["TURNO"];		$det_prov_mysql->ID=$row["ID"] ==null?"":$row["ID"];		$lista[]=$det_prov_mysql;};	return $lista;}	else{
+            return null;
+        }}function todo(){
+        $consulta="select * from det_prov_mysql";
+        $result=$this->CON->consulta($consulta);
+        return $this->rellenar($result);
+    }function buscarXID($id){
+        $consulta="select * from det_prov_mysql where ID=".$id;
+        $result=$this->CON->consulta($consulta);
+        $det_prov_mysql=$this->rellenar($result);
+        if($det_prov_mysql==null){
+            return null;
+        }
+        return $this->rellenar($result);
+    }}
